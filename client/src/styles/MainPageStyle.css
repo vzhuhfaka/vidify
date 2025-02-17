@@ -1,0 +1,38 @@
+.main_page {
+    position: relative;
+    display: flex;
+    border-style: solid;
+    border-color: black;
+    margin: 5px;
+}
+.all_videos {
+    border-style: solid;
+    margin: 5px;
+    border-color: black;
+    height: 800px;
+    width: 100%;
+}
+.fake_menu {
+    right: 0;
+    top: 0;
+    width: 12%;
+}
+.functional_menu {
+    border-style: solid;
+    margin: 5px;
+    border-color: black;
+    width: 10%;
+    height: auto;
+    position: fixed;
+    right: 0;
+    top: 30%;
+    display: flex;
+    flex-direction: column;
+}
+.menu_button {
+    border-style: solid;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+}
