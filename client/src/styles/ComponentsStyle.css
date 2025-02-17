@@ -1,8 +1,6 @@
 /* Стили для компонента DirectionMenu */
 .functional_menu {
-    border-style: solid;
     margin: 5px;
-    border-color: black;
     width: 9%;
     height: auto;
     position: fixed;

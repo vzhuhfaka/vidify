@@ -1,0 +1,20 @@
+.login_form {
+    position: absolute;
+    margin: 5px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    top: 33%;
+    left: 38%;
+}
+.submit_button {
+    margin: 5px;
+    width: 100px;
+}
+.input {
+    margin: 5px;
+    padding: 5px;
+}

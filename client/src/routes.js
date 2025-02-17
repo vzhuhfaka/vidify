@@ -1,5 +1,6 @@
 import { MainPage } from "./pages/MainPage";
 import { ProfilePage } from "./pages/ProfilePage";
+import { LoginPage } from "./pages/LoginPage";
 import React from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 
@@ -11,6 +12,14 @@ export default function Router () {
         },
         {
             path: '/profile',
+            element: <ProfilePage />,
+        },
+        {
+            path: '/login',
+            element: <LoginPage />,
+        },
+        {
+            path: '/history',
             element: <ProfilePage />,
         },
         {

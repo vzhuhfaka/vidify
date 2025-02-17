@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/MainPageStyle.css"
+import styles from "../styles/ProfilePageStyle.css"
 import { Menu } from "../components/DirectionMenu"
 
 
