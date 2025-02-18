@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MEDIA_ROOT = '/home/vzhuh/diskD/projects/vidifymedia'
+
+MEDIA_URL = '/media/'
 
 # Application definition
 
@@ -37,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core',
 ]
 
 MIDDLEWARE = [
