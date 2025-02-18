@@ -9,7 +9,6 @@ export const Menu = () => {
             <Link to={"/login"} className="to_login menu_button">Войти</Link>
             <Link to={"/main"} className="to_main menu_button">Главная</Link>
             <Link to={"/profile"} className="to_my_video menu_button">Мои видео</Link>
-            <Link to={"/history"} className="to_history menu_button">История</Link>
         </div>
     )
 }

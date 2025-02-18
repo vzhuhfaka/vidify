@@ -20,7 +20,7 @@ export default function Router () {
         },
         {
             path: '/history',
-            element: <ProfilePage />,
+            element: <MainPage />,
         },
         {
             path: '*',

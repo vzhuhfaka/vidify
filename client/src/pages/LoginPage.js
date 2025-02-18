@@ -5,7 +5,7 @@ import { Menu } from "../components/DirectionMenu"
 export const LoginPage = () => {
     return (
         <div className="login_page" style={styles.main_page}>
-            <form method="post" action={""} className="login_form">
+            <form method="post" action={"/api"} className="login_form">
                 <input className="input" placeholder="Введите логин"/>
                 <input className="input" placeholder="Введите пароль"/>
                 <input className="submit_button" type="submit" value={"Войти"}/>
