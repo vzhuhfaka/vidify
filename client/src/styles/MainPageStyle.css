@@ -1,0 +1,14 @@
+.main_page {
+    position: relative;
+    display: flex;
+    border-style: solid;
+    border-color: black;
+    margin: 5px;
+}
+.all_videos {
+    border-style: solid;
+    margin: 5px;
+    border-color: black;
+    height: 800px;
+    width: 90%;
+}
