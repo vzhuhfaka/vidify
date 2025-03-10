@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from core.views import VideoAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v0.1/video', VideoAPIView.as_view())
 ]
