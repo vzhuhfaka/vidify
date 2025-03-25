@@ -55,4 +55,26 @@ def cricital(name, msg):
 
     
 # Экспорт
+
+def info(msg):
+    log = init_logger()
+    log.info(msg)
+
+def debug(msg):
+    log = init_logger()
+    log.debug(msg)
+
+def warning(msg):
+    log = init_logger()
+    log.warning(msg)
+
+def error(msg):
+    log = init_logger()
+    log.error(msg)
+def cricital(msg):
+    log = init_logger()
+    log.critical(msg)
+
+    
+# Экспорт логгера
 __all__ = [info, debug, warning, error, cricital]
