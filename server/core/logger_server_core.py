@@ -22,6 +22,7 @@ def init_logger(name):
         file_handler = logging.FileHandler('server/core/server_log.log')
     except Exception as ex:
         print(ex)
+        return None
     file_handler.setLevel(logging.INFO)
 
     # Форматтер
