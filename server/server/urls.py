@@ -16,9 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core.views import VideoAPIView
+from core.views import UserAPIView, ViewAPIView, VideoAPIView, LikeAPIView, CommentAPIView, AuthTokenAPI
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v0.1/video', VideoAPIView.as_view())
+
+    path('api/user', UserAPIView.as_view()),
+    path('api/video', VideoAPIView.as_view()),
+    path('api/view', ViewAPIView.as_view()),
+    path('api/like', LikeAPIView.as_view()),
+    path('api/comment', CommentAPIView.as_view()),
+    
+    path('api/login', AuthTokenAPI.as_view())
 ]
