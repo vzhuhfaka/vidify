@@ -14,6 +14,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
+from django.core.files.storage import default_storage
 
 
 class UserAPIView(APIView):
@@ -54,13 +55,13 @@ class AuthTokenAPI(ObtainAuthToken):
             error(__name__, 'POST AuthTokenAPI | ')
             return Response({'error': 'Invalid Credentials'}, status=400)
         
-        # Получаем или создаем токен
         token, created = Token.objects.get_or_create(user=user)
         
+        info(__name__, 'POST AuthTokenAPI | OK')
         # Возвращаем ответ с токеном и данными пользователя
         return Response({
             'token': token.key,
-            'user_id': user.pk,
+            'userId': user.pk,
             'username': user.username,
             'email': user.email
         })
@@ -70,18 +71,38 @@ class VideoAPIView(APIView):
     def get(self, request):
         videos = Video.objects.all()
         return Response({'videos': VideoSerializer(videos, many=True).data})
-    
-    def post(self, request):
-        if not request.user.is_authenticated:
-            return Response({"error": "Authentication required"}, status=401)
 
-        serializer = VideoSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-        print('serializer is Fasle')
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request):
+        try:
+            if request.data['user'] == 'null':
+                return Response({
+                    'error': 'you need auth'
+            }, status=status.HTTP_400_BAD_REQUEST)
+            
+            video_file = request.FILES.get('video_file')
+            if not video_file:
+                return Response({"error": "Отсутствует файл"}, status=400)
+
+            file_path = default_storage.save(f'videos/{video_file.name}', video_file)
+            request.data['video_file'] = file_path
+
+            serializer = VideoSerializer(data=request.data)
+            
+            if serializer.is_valid():
+                info(__name__, 'POST VideoAPIView | CREATED')
+                serializer.save()
+            else:
+                error(__name__, 'POST VideoAPIView | Serializer is invalid')
+
+            print(serializer.errors)
+
+            return Response({
+                'video_file created'
+            }, status=status.HTTP_201_CREATED)
+            
+        except Exception as e:
+            print("Error:", str(e))
+            return Response({"error": str(e)}, status=400)
     
 
 class ViewAPIView(APIView):

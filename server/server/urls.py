@@ -23,6 +23,7 @@ urlpatterns = [
 
     path('api/user', UserAPIView.as_view()),
     path('api/video', VideoAPIView.as_view()),
+    
     path('api/view', ViewAPIView.as_view()),
     path('api/like', LikeAPIView.as_view()),
     path('api/comment', CommentAPIView.as_view()),
