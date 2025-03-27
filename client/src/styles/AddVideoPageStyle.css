@@ -1,0 +1,15 @@
+.add_video_form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    left: 37%;
+    top: 100px;
+    height: auto;
+}
+.item {
+    margin: 5px;
+}
+.desription {
+    line-height: 100px;
+}

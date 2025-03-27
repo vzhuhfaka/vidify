@@ -5,7 +5,7 @@ import { Menu } from '../components/DirectionMenu'
 import { AuthContext } from "../context/AuthContext.js";
 
 export const LoginPage = () => {
-    const { login, logout, isAuthenticated } = useContext(AuthContext)
+    const { login, isAuthenticated, token } = useContext(AuthContext)
     const [form, setForm] = useState({
         username: '',
         password: '',
@@ -40,6 +40,9 @@ export const LoginPage = () => {
         }
     };
 
+    const check = () => {
+        console.log(isAuthenticated, token)
+    }
 
     return (
         <div className="login_page" style={styles.main_page}>
@@ -48,9 +51,10 @@ export const LoginPage = () => {
                 <input className="input" name="password" type="password" placeholder="Введите пароль" onChange={changeHandler}/>
                 <input className="submit_button" type="submit" value={"Войти"} onClick={loginHandler}/>
                 <input className="submit_button" type="submit" value={"Регистрация"} onClick={registerHandler}/>
+                <button onClick={check}>check</button>
             </div>
 
-            {<Menu/>}
+            {<Menu />}
         </div>
     )
 }
