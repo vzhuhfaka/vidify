@@ -18,11 +18,9 @@ def init_logger(name):
     clear_handlers(log)
 
     # Обработчик для записи в файл
-    try:
-        file_handler = logging.FileHandler('server/core/server_log.log')
-    except Exception as ex:
-        print(ex)
-        return None
+
+    file_handler = logging.FileHandler('server/core/server_log.log')
+
     file_handler.setLevel(logging.INFO)
 
     # Форматтер

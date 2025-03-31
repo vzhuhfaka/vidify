@@ -15,6 +15,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 class Video(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     video_file = models.CharField(max_length=255)
+    preview = models.CharField(max_length=255, blank=True)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     views = models.PositiveIntegerField(default=0)

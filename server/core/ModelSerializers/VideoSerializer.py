@@ -5,4 +5,4 @@ from core.models import Video, User
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
-        fields = ['user', 'video_file', 'title', 'description', 'views', 'likes']
+        fields = ['user', 'video_file', 'preview', 'title', 'description', 'views', 'likes']

@@ -12,6 +12,9 @@ export default function Router () {
             element: <MainPage />, 
         },
         {
+            path: '/main/player/'
+        },
+        {
             path: '/profile/add-video',
             element: <AddVideoPage />
         },

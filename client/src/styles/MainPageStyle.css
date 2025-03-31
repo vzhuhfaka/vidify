@@ -12,3 +12,16 @@
     height: 800px;
     width: 90%;
 }
+.preview {
+    height: 200px;
+    width: 350px;
+    border-style: solid;
+    margin: 5px;
+    border-color: black;
+}
+.item {
+    border-style: solid;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+}
