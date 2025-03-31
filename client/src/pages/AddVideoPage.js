@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 export const AddVideoPage = () => {
     const { token, isAuthenticated, userId } = useContext(AuthContext)
     const [selectedFile, setSelectedFile] = useState(null)
+    const [preview, setPreview] = useState(null)
     const [form, setForm] = useState({
         title: '',
         description: '',
@@ -15,6 +16,10 @@ export const AddVideoPage = () => {
 
     const fileChangeHandler = event => {
         setSelectedFile(event.target.files[0])
+    }
+
+    const previewChangeHandler = event => {
+        setPreview(event.target.files[0])
     }
 
     const changeHandler = event => {
@@ -28,7 +33,12 @@ export const AddVideoPage = () => {
             if (selectedFile){
                 formData.append('video_file', selectedFile)
             } else {
-                alert('Необходимо выбрать файл')
+                alert('Необходимо выбрать video файл')
+            }
+            if (preview) {
+                formData.append('preview', preview)
+            } else {
+                alert('Необходимо выбрать preview файл')
             }
 
             formData.append('title', form.title);
@@ -58,7 +68,10 @@ export const AddVideoPage = () => {
             <div className="add_video_form">
                 <input className="item title" name="title" onChange={changeHandler} type="text" placeholder="Введите название" />
                 <input className="item description" name="description" onChange={changeHandler} type="text" placeholder="Введите описание" />
-                <input className="item" name='file' onChange={fileChangeHandler} type="file"/>
+                <div>video file</div>
+                <input className="item select_video_file" name='file' onChange={fileChangeHandler} type="file" accept=".mp4, .mp3"/>
+                <div>preview</div>
+                <input className="item select_preview" name='preview' onChange={previewChangeHandler} type='file' accept=".png, .jpg"/>
                 <button onClick={uploadHandler}>Загрузить</button>
                 <button onClick={check}>check auth</button>
             </div>

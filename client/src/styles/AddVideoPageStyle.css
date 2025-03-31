@@ -2,14 +2,14 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 400px;
-    left: 37%;
+    width: 600px;
+    left: 30%;
     top: 100px;
     height: auto;
 }
 .item {
     margin: 5px;
 }
-.desription {
-    line-height: 100px;
+.title {
+    height: 40px;
 }
