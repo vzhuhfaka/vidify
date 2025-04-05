@@ -9,7 +9,7 @@
     border-style: solid;
     margin: 5px;
     border-color: black;
-    height: 800px;
+    height: auto;
     width: 90%;
 }
 .preview {

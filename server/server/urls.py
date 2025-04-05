@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/user/<int:pk>', UserAPIView.as_view()),
     path('api/user', UserAPIView.as_view()),
+    path('api/video/<int:pk>', VideoAPIView.as_view()),
     path('api/video', VideoAPIView.as_view()),
     path('api/view', ViewAPIView.as_view()),
     path('api/like', LikeAPIView.as_view()),
