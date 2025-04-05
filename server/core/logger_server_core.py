@@ -10,7 +10,10 @@ def clear_handlers(logger):
 
 
 def init_logger(name):
-    # Настройка логгера
+    """
+    Настройка логгера
+    """
+
     log = logging.getLogger(name)
     log.setLevel(logging.INFO)
 
@@ -32,22 +35,37 @@ def init_logger(name):
     return log
 
 def info(name, msg):
+    """
+    Для сообщения уровня INFO в логгер
+    """
     log = init_logger(name)
     log.info(msg)
 
-def debug(name, msg): 
+def debug(name, msg):
+    """
+    Для сообщения уровня DEBUG в логгер
+    """
     log = init_logger(name)
     log.debug(msg)
 
 def warning(name, msg):
+    """
+    Для сообщения уровня WARNING в логгер
+    """
     log = init_logger(name)
     log.warning(msg)
 
 def error(name, msg):
+    """
+    Для сообщения уровня ERROR в логгер
+    """
     log = init_logger(name)
     log.error(msg)
 
 def cricital(name, msg):
+    """
+    Для сообщения уровня CRITICAL в логгер
+    """
     log = init_logger(name)
     log.critical(msg)
 
