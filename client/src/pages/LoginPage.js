@@ -19,7 +19,7 @@ export const LoginPage = () => {
 
     const registerHandler = async () => {
         try {
-            const data = await request('/api/user', "POST", {...form}, {
+            const data = await request('/api/v1/user', "POST", {...form}, {
                 'Content-Type': 'application/json'
             });
             console.log(data)
@@ -30,7 +30,7 @@ export const LoginPage = () => {
 
     const loginHandler = async () => {
         try {
-            const data = await request('/api/login', "POST", {...form}, {
+            const data = await request('/api/v1/login', "POST", {...form}, {
                 'Content-Type': 'application/json'
             });
             login(data.token, data.userId || null);

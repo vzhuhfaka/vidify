@@ -1,7 +1,9 @@
 import styles from "../styles/MainPageStyle.css"
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu } from "../components/DirectionMenu"
 import { useHttp } from "../hooks/http.hook.js"
+import { Link } from "react-router-dom"
+
 
 export const MainPage = () => {
     const {request} = useHttp()
@@ -10,7 +12,7 @@ export const MainPage = () => {
     
     const getVideos = async () => {
         try{
-            const videodata = await request('/api/video', 'GET')
+            const videodata = await request('/api/v1/video', 'GET')
             setData(videodata['videos'])
             setUsers(videodata['users'])
         } catch (e) {
@@ -25,13 +27,18 @@ export const MainPage = () => {
     const previewUrl = (url) => {
         return "http://localhost:8000/media/" + url
     }
-    
+
+    const videoUrl = (url) => {
+        return "/main/player/" + url
+    } 
+
+
     const UsingArrayMap = () => (
         <div>
             {data.length > 0 ? (
             data.map((video, index) => (
                 <div className="item" style={styles} key={index}>
-                    <img className="preview" src={previewUrl(video['preview'])}/>
+                    <Link to={videoUrl(video['id'])}><img className="preview" src={previewUrl(video['preview'])}/></Link>
                     <div className="about_video">
                         <div className="title">название: {video['title']}</div>
                         <div className="author">автор: {users[video['user']]}</div>
