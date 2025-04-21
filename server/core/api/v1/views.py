@@ -1,15 +1,15 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Video, View, Like, Comment
+from core.models import Video, View, Like, Comment
 from django.contrib.auth.models import User
 from django.forms import model_to_dict
-from .ModelSerializers.UserSerializer import UserSerializer
-from .ModelSerializers.VideoSerializer import VideoSerializer
-from .ModelSerializers.ViewSerializer import ViewSerializer
-from .ModelSerializers.LikeSerializer import LikeSerializer
-from .ModelSerializers.CommentSerializer import CommentSerializer
-from .logger_server_core import info, error
+from core.ModelSerializers.UserSerializer import UserSerializer
+from core.ModelSerializers.VideoSerializer import VideoSerializer
+from core.ModelSerializers.ViewSerializer import ViewSerializer
+from core.ModelSerializers.LikeSerializer import LikeSerializer
+from core.ModelSerializers.CommentSerializer import CommentSerializer
+from core.logger_server_core import info, error
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.contrib.auth import authenticate

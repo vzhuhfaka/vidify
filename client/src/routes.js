@@ -2,6 +2,7 @@ import { MainPage } from "./pages/MainPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { LoginPage } from "./pages/LoginPage";
 import { AddVideoPage } from "./pages/AddVideoPage"
+import { PlayerPage } from "./pages/PlayerPage"
 import React from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 
@@ -12,7 +13,8 @@ export default function Router () {
             element: <MainPage />, 
         },
         {
-            path: '/main/player/'
+            path: '/main/player/:id',
+            element: <PlayerPage />
         },
         {
             path: '/profile/add-video',
@@ -30,10 +32,7 @@ export default function Router () {
             path: '/history',
             element: <MainPage />,
         },
-        {
-            path: '*',
-            element: <Navigate to="/main" />
-        }
+
     ])
 
     return Routes

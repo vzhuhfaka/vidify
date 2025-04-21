@@ -11,7 +11,7 @@ export const ProfilePage = () => {
 
     const getVideos = async () => {
         try{
-            const gotData = await request('/api/video/6')
+            const gotData = await request('/api/v1/video/6')
             setData(gotData['user_videos'])
         } catch (e) {
             console.log('error: ', e)
@@ -68,16 +68,11 @@ export const ProfilePage = () => {
         </div>
     )
 
-    const check = () => {
-        console.log(data)
-    }
-
     return (
         <div className="profile_page" style={styles.main_page}>
             <Link to={"/profile/add-video"} className="button_add">Добавить новую запись</Link>
 
             <div className="my_videos" style={styles.all_videos}>
-                <button onClick={check}>check</button>
                 <UsingArrayMap />
             </div>
 

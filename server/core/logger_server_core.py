@@ -22,7 +22,7 @@ def init_logger(name):
 
     # Обработчик для записи в файл
 
-    file_handler = logging.FileHandler('server/core/server_log.log')
+    file_handler = logging.FileHandler('server/core/server.log')
 
     file_handler.setLevel(logging.INFO)
 

@@ -1,0 +1,7 @@
+.player {
+    position: relative;
+    margin: 10px;
+    border-style: solid;
+    padding: 5px;
+    width: fit-content;
+}
