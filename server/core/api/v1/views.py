@@ -24,8 +24,8 @@ class UserAPIView(APIView):
     def get(self, request, pk=None):
         """
         Метод GET
-        При запросе на адрес /api/user функция вернет все записи из модели User
-        При запросе на адрес /api/user/<int:pk> вернет запись с pk=pk из модели User
+        При запросе на адрес /api/v1/user функция вернет все записи из модели User
+        При запросе на адрес /api/v1/user/<int:pk> вернет запись с pk=pk из модели User
         """
         if pk:
             user = get_object_or_404(User, pk=pk)
@@ -119,7 +119,7 @@ class VideoAPIView(APIView):
     def post(self, request):
         """
         Метод POST
-        При запросе на адрес /api/video создает запись в модели Video
+        При запросе на адрес /api/v1/video создает запись в модели Video
         """
         try:
             # Проверяем авторизирован ли пользователь

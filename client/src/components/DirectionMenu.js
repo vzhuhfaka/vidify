@@ -11,7 +11,7 @@ export const Menu = () => {
 
     const getUser = async () => {
         try{
-            const got_username = await request("api/user/" + userId)
+            const got_username = await request("/api/v1/user/" + userId)
             setUsername(got_username['username'])
         } catch (e) {
             console.log('error: ', e)

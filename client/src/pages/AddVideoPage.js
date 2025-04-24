@@ -47,7 +47,7 @@ export const AddVideoPage = () => {
             formData.append('likes', form.likes);
             formData.append('user', userId)
 
-            const res = await fetch('/api/video', {
+            const res = await fetch('/api/v1/video', {
                 method: 'POST',
                 body: formData
             })
