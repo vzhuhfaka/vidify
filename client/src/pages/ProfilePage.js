@@ -47,12 +47,16 @@ export const ProfilePage = () => {
         return "http://localhost:8000/media/" + url
     }
 
+    const videoUrl = (url) => {
+        return "/main/player/" + url
+    } 
+
     const UsingArrayMap = () => (
         <div>
             {data.length > 0 ? (
             data.map((video, index) => (
                 <div className="item" style={styles} key={index}>
-                    <img className="preview" src={previewUrl(video['preview'])}/>
+                    <Link to={videoUrl(video['id'])}><img className="preview" src={previewUrl(video['preview'])}/></Link>
                     <div className="about_video">
                         <div className="title">название: {video['title']}</div>
                         <div className="description">описание: {video['description']}</div>
