@@ -3,6 +3,8 @@ import styles from "../styles/ProfilePageStyle.css"
 import { Menu } from "../components/DirectionMenu"
 import { Link } from "react-router-dom"
 import { useHttp } from "../hooks/http.hook.js"
+import { previewUrl, videoUrl } from "../utils.js";
+
 
 export const ProfilePage = () => {
     const [data, setData] = useState([])
@@ -11,8 +13,22 @@ export const ProfilePage = () => {
 
     const getVideos = async () => {
         try{
-            const gotData = await request('/api/v1/video/6')
-            setData(gotData['user_videos'])
+            const userId = localStorage.getItem('userId')
+            const getData = await request('/api/v3/all-user-video/' + userId)
+            setData(getData['user_videos'])
+        } catch (e) {
+            console.log('error: ', e)
+        }
+    }
+    
+    const deleteVideo = async (id) => {
+        try{
+            if (id){
+                const deleted = await request('/api/v3/video-by-id/' + id, 'DELETE')
+                console.log(deleted)
+                window.location.reload()
+            }
+
         } catch (e) {
             console.log('error: ', e)
         }
@@ -26,61 +42,51 @@ export const ProfilePage = () => {
         deleteVideo(IdForDelete)
     }, [IdForDelete])
 
-    const deleteVideo = async (id) => {
-        try{
-            if (id){
-                const deleted = await request('/api/video/' + id, 'DELETE')
-                console.log(deleted)
-                window.location.reload()
-            }
-            
-        } catch (e) {
-            console.log('error: ', e)
-        }
-    }
-
+    // Получаем все видео авторизованного с сервера
     useEffect(() => {
-            getVideos()
+        getVideos()
     }, [])
-
-    const previewUrl = (url) => {
-        return "http://localhost:8000/media/" + url
-    }
-
-    const videoUrl = (url) => {
-        return "/main/player/" + url
-    } 
-
-    const UsingArrayMap = () => (
-        <div>
+    
+    const VideoList = () => (
+        <div className="my_videos">
             {data.length > 0 ? (
-            data.map((video, index) => (
-                <div className="item" style={styles} key={index}>
-                    <Link to={videoUrl(video['id'])}><img className="preview" src={previewUrl(video['preview'])}/></Link>
-                    <div className="about_video">
-                        <div className="title">название: {video['title']}</div>
-                        <div className="description">описание: {video['description']}</div>
-                        <div className="likes">лайков: {video['likes']}</div>
-                        <div className="views">просмотров: {video['views']}</div>
-                        <button className="delete_video" id={video['id']} onClick={setDeleteVideo}>Удалить </button>
+                data.map((video, index) => (
+                    <div className="item" key={index}>
+                        <Link to={videoUrl(video['id'])}>
+                            <img alt="preview" className="preview" src={previewUrl(video['preview'])}/>
+                        </Link>
+                        <div className="about_video">
+                            <div className="title">{video['title']}</div>
+                            <div className="description">{video['description']}</div>
+                            <div className="stats">
+                                <span>❤️ {video['likes']}</span>
+                                <span>👁️ {video['views']}</span>
+                            </div>
+                            <button 
+                                className="delete_video" 
+                                id={video['id']} 
+                                onClick={setDeleteVideo}
+                            >
+                                Удалить
+                            </button>
+                        </div>
                     </div>
-                </div>
-            ))
+                ))
             ) : (
-                <div>Загрузка данных...</div>
+                <div className="loading">У вас пока нет видео</div>
             )}
         </div>
     )
 
     return (
-        <div className="profile_page" style={styles.main_page}>
-            <Link to={"/profile/add-video"} className="button_add">Добавить новую запись</Link>
+        <div className="profile_page">
+            <Link to={"/profile/add-video"} className="button_add">
+                Добавить новое видео
+            </Link>
 
-            <div className="my_videos" style={styles.all_videos}>
-                <UsingArrayMap />
-            </div>
+            <VideoList />
 
-            {<Menu/>}
+            <Menu />
         </div>
     )
 }

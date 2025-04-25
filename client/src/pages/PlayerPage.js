@@ -4,94 +4,89 @@ import {useParams} from "react-router-dom";
 import ReactPlayer from 'react-player'
 import { Menu } from "../components/DirectionMenu"
 import { useHttp } from "../hooks/http.hook.js"
-
+import { previewUrl } from "../utils.js"
 
 export const PlayerPage = () => {
     const { id } = useParams();
     const { request } = useHttp()
-    const [ videoData, setVideoData ] = useState([])
-    const [ username, setUsername ] = useState(null)
-    const [ likeValue, setLikeValue ] = useState(-1)
-    const [ countLikes, setCountLikes ] = useState(0)
+    const [videoData, setVideoData] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     const getVideo = async () => {
         try {
-            const data = await request('/api/v2/video/' + id, 'GET')
-            setVideoData(data['video'])
-
+            setLoading(true)
+            const data = await request('/api/v3/video-by-id/' + id, 'GET')
+            setVideoData(data['video'][0])
         } catch (e) {
-            console.log(e)
-        }
-    }
-
-    const getUsername = async () => {
-        try {
-            const data = await request('/api/v1/user/' + videoData[0]['user'], 'GET')
-            setUsername(data['username'])
-            
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    const setLike = async () => {
-        try {
-            const data = await request(
-                '/api/v2/set-like', 
-                'PATCH', 
-                {
-                    'videoId': videoData[0]['id'],
-                    'likeValue': likeValue
-                }
-            )
-            setCountLikes(countLikes+=likeValue)
-            console.log(data)
-        } catch (e) {
-            console.log(e)
+            console.error("Ошибка загрузки видео:", e)
+        } finally {
+            setLoading(false)
         }
     }
 
     useEffect(() => {
         getVideo()
     }, [id])
-
-    useEffect(() => {
-        if (videoData.length != 0){
-            getUsername()
-            setCountLikes(videoData[0]['likes'])
-        }
-    }, [videoData])
-
-    const previewUrl = (url) => {
-        return "http://localhost:8000/media/" + url
-    }
-
-    const changeLike = () => {
-        setLikeValue(likeValue===1 ? -1 : 1)
-        setLike()
-    }
     
-    if (videoData.length === 0) {
-        return <div>Загрузка данных...</div>
+    if (loading) {
+        return (
+            <div className="player_page">
+                <div className="loading">Загрузка видео...</div>
+                <Menu />
+            </div>
+        )
+    }
+
+    if (!videoData) {
+        return (
+            <div className="player_page">
+                <div className="loading">Видео не найдено</div>
+                <Menu />
+            </div>
+        )
     }
 
     return (
-        <div style={styles}>
-            <div className="player">
-            <ReactPlayer
-                controls={true} 
-                url={previewUrl(videoData[0]['video_file'])}
-            />
+        <div className="player_page">
+            <div className="player_container">
+                <ReactPlayer
+                    className="player"
+                    controls={true}
+                    width="100%"
+                    height="100%"
+                    url={previewUrl(videoData['video_file'])}
+                    config={{
+                        file: {
+                            attributes: {
+                                controlsList: 'nodownload'
+                            }
+                        }
+                    }}
+                />
             </div>
-            <div className="data-about-video">
-                <div>название: {videoData[0]['title']}</div>
-                <div className="likes">нравится: {countLikes}</div>
-                <div className="views">просмотров: {videoData[0]['views']}</div>
-                <div className="author">автор: {username}</div>
-                <div className="description">описание: {videoData[0]['description']}</div>
-                <button className="isLike" onClick={changeLike}>Нравится: { likeValue==1 ? 0 : 1 }</button>
+            
+            <div className="video_info">
+                <h1 className="video_title">{videoData['title']}</h1>
+                
+                <div className="video_stats">
+                    <div className="video_stat">
+                        <span>❤️ {videoData['likes']}</span>
+                    </div>
+                    <div className="video_stat">
+                        <span>👁️ {videoData['views']}</span>
+                    </div>
+                </div>
+                
+                <div className="video_author">
+                    <span>Автор: {videoData['username']}</span>
+                </div>
+                
+                <div className="video_description">
+                    {videoData['description']}
+                </div>
             </div>
-            {<Menu/>}
+            
+            <Menu />
         </div>
     )
 }

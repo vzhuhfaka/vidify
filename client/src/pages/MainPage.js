@@ -3,18 +3,19 @@ import React, { useEffect, useState } from "react";
 import { Menu } from "../components/DirectionMenu"
 import { useHttp } from "../hooks/http.hook.js"
 import { Link } from "react-router-dom"
+import { previewUrl, videoUrl } from "../utils.js";
 
 
 export const MainPage = () => {
     const {request} = useHttp()
     const [data, setData] = useState([])
-    const [users, setUsers] = useState([])
-    
+
+    // Получаем все видео с сервера
     const getVideos = async () => {
         try{
-            const videodata = await request('/api/v1/video', 'GET')
+            const videodata = await request('/api/v3/all-video', 'GET')
             setData(videodata['videos'])
-            setUsers(videodata['users'])
+
         } catch (e) {
             console.log('getVideos | error: ', e)
         }
@@ -24,42 +25,34 @@ export const MainPage = () => {
         getVideos()
     }, [])
 
-    const previewUrl = (url) => {
-        return "http://localhost:8000/media/" + url
-    }
-
-    const videoUrl = (url) => {
-        return "/main/player/" + url
-    } 
-
-
-    const UsingArrayMap = () => (
-        <div>
+    const VideoList = () => (
+        <div className="all_videos">
             {data.length > 0 ? (
-            data.map((video, index) => (
-                <div className="item" style={styles} key={index}>
-                    <Link to={videoUrl(video['id'])}><img className="preview" src={previewUrl(video['preview'])}/></Link>
-                    <div className="about_video">
-                        <div className="title">название: {video['title']}</div>
-                        <div className="author">автор: {users[video['user']]}</div>
-                        <div className="description">описание: {video['description']}</div>
-                        <div className="likes">лайков: {video['likes']}</div>
-                        <div className="views">просмотров: {video['views']}</div>
+                data.map((video, index) => (
+                    <div className="item" key={index}>
+                        <Link to={videoUrl(video['id'])}>
+                            <img alt="preview" className="preview" src={previewUrl(video['preview'])}/>
+                        </Link>
+                        <div className="about_video">
+                            <div className="title">{video['title']}</div>
+                            <div className="author">Автор: {video['username']}</div>
+                            <div className="description">{video['description']}</div>
+                            <div className="stats">
+                                <span className="likes">❤️ {video['likes']}</span>
+                                <span className="views">👁️ {video['views']}</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            ))
+                ))
             ) : (
-                <div>Загрузка данных...</div>
+                <div className="loading">Загрузка данных...</div>
             )}
         </div> 
     )
 
     return (
-        <div className="main_page" style={styles.main_page}>
-            <div className="all_videos" style={styles.all_videos}>
-                <UsingArrayMap />
-            </div>
- 
+        <div className="main_page">
+            <VideoList />
             {<Menu/>}
         </div>
     )
