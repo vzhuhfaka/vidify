@@ -5,21 +5,20 @@ import { Menu } from '../components/DirectionMenu'
 import { AuthContext } from "../context/AuthContext.js";
 
 export const LoginPage = () => {
-    const { login, isAuthenticated, token } = useContext(AuthContext)
+    const { login } = useContext(AuthContext)
+    const {request} = useHttp()
     const [form, setForm] = useState({
         username: '',
         password: '',
     })
-
-    const {request} = useHttp()
-
+    
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value })
     }
 
     const registerHandler = async () => {
         try {
-            const data = await request('/api/v1/user', "POST", {...form}, {
+            const data = await request('/api/v3/add-user', "POST", {...form}, {
                 'Content-Type': 'application/json'
             });
             console.log(data)
@@ -30,31 +29,53 @@ export const LoginPage = () => {
 
     const loginHandler = async () => {
         try {
-            const data = await request('/api/v1/login', "POST", {...form}, {
+            const data = await request('/api/v3/login', "POST", {...form}, {
                 'Content-Type': 'application/json'
             });
             login(data.token, data.userId || null);
+            localStorage.setItem('username', data.username);
+            localStorage.setItem('userId', data.userId);
             console.log('auth | OK')
         } catch (e) {   
-            console.error("Login error:", e.message);
+            console.error("login error:", e.message);
         }
     };
-
-    const check = () => {
-        console.log(isAuthenticated, token)
-    }
-
+    
     return (
-        <div className="login_page" style={styles.main_page}>
+        <div className="login_page">
             <div className="login_form">
-                <input className="input" name="username" placeholder="Введите логин" onChange={changeHandler}/>
-                <input className="input" name="password" type="password" placeholder="Введите пароль" onChange={changeHandler}/>
-                <input className="submit_button" type="submit" value={"Войти"} onClick={loginHandler}/>
-                <input className="submit_button" type="submit" value={"Регистрация"} onClick={registerHandler}/>
-                <button onClick={check}>check</button>
+                <h2>Вход в аккаунт</h2>
+                <input 
+                    className="input" 
+                    name="username" 
+                    placeholder="Введите логин" 
+                    onChange={changeHandler}
+                />
+                <input 
+                    className="input" 
+                    name="password" 
+                    type="password" 
+                    placeholder="Введите пароль" 
+                    onChange={changeHandler}
+                />
+                                
+                <div className="buttons_container">
+                    <button 
+                        className="submit_button" 
+                        onClick={loginHandler}
+                    >
+                        Войти
+                    </button>
+                    <button 
+                        className="submit_button" 
+                        onClick={registerHandler}
+                    >
+                        Регистрация
+                    </button>
+                </div>
             </div>
 
-            {<Menu />}
+            <Menu />
         </div>
     )
 }

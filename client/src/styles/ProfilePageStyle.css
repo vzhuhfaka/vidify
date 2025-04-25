@@ -1,14 +1,142 @@
-.my_videos {
+.profile_page {
     position: relative;
     display: flex;
-    flex-wrap: wrap;
-    border-style: solid;
-    border-color: black;
-    margin: 5px;
-    width: 90%;
-    height: auto;
-
+    flex-direction: column;
+    padding: 20px 250px 20px 20px;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
+
 .button_add {
-    margin: 5px;
+    display: inline-block;
+    padding: 12px 25px;
+    margin: 0 0 25px 15px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+}
+
+.button_add:hover {
+    background-color: #3e8e41;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.my_videos {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    padding: 15px;
+}
+
+.item {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.preview {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+}
+
+.about_video {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 5px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.stats {
+    display: flex;
+    gap: 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+.delete_video {
+    padding: 8px 15px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+    align-self: flex-start;
+}
+
+.delete_video:hover {
+    background-color: #d32f2f;
+}
+
+.loading {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    padding: 50px;
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 1000px) {
+    .profile_page {
+        padding-right: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile_page {
+        padding: 15px;
+    }
+    
+    .my_videos {
+        grid-template-columns: 1fr;
+    }
+    
+    .button_add {
+        margin: 0 auto 20px;
+        width: calc(100% - 30px);
+        text-align: center;
+    }
 }

@@ -1,14 +1,11 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from core.models import Video, View, Like, Comment
+from core.models import Video
 from django.contrib.auth.models import User
 from django.forms import model_to_dict
 from core.ModelSerializers.UserSerializer import UserSerializer
 from core.ModelSerializers.VideoSerializer import VideoSerializer
-from core.ModelSerializers.ViewSerializer import ViewSerializer
-from core.ModelSerializers.LikeSerializer import LikeSerializer
-from core.ModelSerializers.CommentSerializer import CommentSerializer
 from core.logger_server_core import info, error
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -166,46 +163,3 @@ class VideoAPIView(APIView):
             print('error: ', ex)
     
 
-# Далее классы и методы будут дорабатываться
-class ViewAPIView(APIView):
-    def get(self, request):
-        views = View.objects.all()
-        return Response({'views': ViewSerializer(views, many=True).data})
-    
-    def post(self, requset):
-        post_new = View.objects.create(
-            user=requset.data['user'],
-            video=requset.data['video'],
-            viewed_at=requset.data['viewed_at'],
-        )
-        return Response({'post': model_to_dict(post_new)})
-    
-
-class LikeAPIView(APIView):
-    def get(self, request):
-        likes = Like.objects.all()
-        return Response({'views': LikeSerializer(likes, many=True).data})
-    
-    def post(self, requset):
-        post_new = Like.objects.create(
-            user=requset.data['user'],
-            video=requset.data['video'],
-            liked_at=requset.data['liked_at'],
-        )
-        return Response({'post': model_to_dict(post_new)})
-    
-
-class CommentAPIView(APIView):
-    def get(self, request):
-        comments = Comment.objects.all()
-        return Response({'views': CommentSerializer(comments, many=True).data})
-    
-    def post(self, requset):
-        post_new = Comment.objects.create(
-            user=requset.data['user'],
-            video=requset.data['video'],
-            comment=requset.data['comment'],
-            created_at=requset.data['created-at'],
-            updated_at=requset.data['updated_at']
-        )
-        return Response({'post': model_to_dict(post_new)})
