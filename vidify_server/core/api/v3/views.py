@@ -11,6 +11,7 @@ from rest_framework.authtoken.models import Token
 
 from django.contrib.auth import authenticate
 from django.core.files.storage import default_storage
+from django.core.cache import cache
 
 
 class AuthAPI(ObtainAuthToken):
@@ -56,9 +57,9 @@ class UserAPI(APIView):
 
 
 class UserVideoAPI(APIView):
-    """API для работы с моделью Video, которая привязана к пользователю"""
+    """API для работы с моделью Video"""
     def get(self, request, user_id=None):
-        """Получает записи"""
+        """Получает записи все видео пользователя"""
         if user_id:
             user_videos = Video.objects.filter(user=user_id)
             return Response({'user_videos': VideoSerializer(user_videos, many=True).data}, status=status.HTTP_200_OK)
@@ -73,8 +74,14 @@ class VideoAPI(APIView):
             user_videos = Video.objects.filter(id=video_id)
             return Response({'video': VideoSerializer(user_videos, many=True).data}, status=status.HTTP_200_OK)
         
+        if cache.get('videos') is not None:  # проверяем кэш на наличие данных
+            videos = cache.get('videos')
+            return Response({'videos': videos}, status=status.HTTP_200_OK)
+        
         videos = Video.objects.all()    
         videos_serialize = VideoSerializer(videos, many=True).data
+
+        cache.set('videos', videos_serialize, timeout=60*60*24)  # кэшируем на 24 часа
         return Response({'videos': videos_serialize}, status=status.HTTP_200_OK)
     
     def post(self, request):
@@ -102,7 +109,8 @@ class VideoAPI(APIView):
 
             if serializer.is_valid():
                 serializer.save()
-
+            
+            cache.delete('videos')  # очищаем кэш
             return Response({
                 'video_file created'
             }, status=status.HTTP_201_CREATED)
