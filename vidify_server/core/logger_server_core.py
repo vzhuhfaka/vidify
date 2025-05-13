@@ -17,20 +17,20 @@ def init_logger(name):
     log = logging.getLogger(name)
     log.setLevel(logging.INFO)
 
-    # Удаляем старые обработчики
+
     clear_handlers(log)
 
-    # Обработчик для записи в файл
+
 
     file_handler = logging.FileHandler('server/core/server.log')
 
     file_handler.setLevel(logging.INFO)
 
-    # Форматтер
+    
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     file_handler.setFormatter(formatter)
 
-    # Добавление обработчика
+    
     log.addHandler(file_handler)
     return log
 
@@ -70,5 +70,5 @@ def cricital(name, msg):
     log.critical(msg)
 
     
-# Экспорт
+
 __all__ = [info, debug, warning, error, cricital]
