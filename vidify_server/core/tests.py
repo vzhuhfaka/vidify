@@ -69,4 +69,3 @@ class VideoAPITestCase(TestCase):
         client = Client()
         delete_video = client.delete('/api/v3/video-by-id/1')
         self.assertEqual(delete_video.status_code, 200)
-
