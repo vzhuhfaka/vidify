@@ -18,7 +18,7 @@ export const LoginPage = () => {
 
     const registerHandler = async () => {
         try {
-            const data = await request('/api/v3/add-user', "POST", {...form}, {
+            const data = await request('/api/v3/register', "POST", {...form}, {
                 'Content-Type': 'application/json'
             });
             console.log(data)
