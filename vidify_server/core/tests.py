@@ -39,8 +39,8 @@ class VideoAPITestCase(TestCase):
         """Тест на создание видео"""
         client = Client()
         data = {
-            'video_file': open('core/test_files/test_video.mp4', 'rb'),
-            'preview': open('core/test_files/test_preview.jpg', 'rb'),
+            'video_file': open('vidify_server/core/test_files/test_video.mp4', 'rb'),
+            'preview': open('vidify_server/core/test_files/test_preview.jpg', 'rb'),
             'title': 'Test Video',
             'description': 'Test Description',
             'views': 0,
