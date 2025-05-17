@@ -1,70 +1,128 @@
-# Getting Started with Create React App
+# Клиентская часть (Frontend)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Клиентская часть проекта реализована с использованием библиотеки React и языка TypeScript. В качестве сборщика и инструмента разработки используется Vite. Архитектура приложения разделена по функциональным и структурным признакам, с акцентом на читаемость, масштабируемость и модульность кода.
 
-## Available Scripts
+## Установка
 
-In the project directory, you can run:
+Чтобы запустить клиентскую часть проекта `vidify` локально, выполните следующие шаги:
 
-### `npm start`
+1. Клонируйте репозиторий и перейдите в папку клиента:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+git clone https://github.com/vzhuhfaka/vidify.git
+cd vidify/client
+npm install
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Создайте и активируйте виртуальное окружение Python (если требуется):
 
-### `npm test`
+На Windows:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+```
 
-### `npm run build`
+На macOS/Linux:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Запустите приложение в режиме разработки:
+```bash
+npm run dev
+```
+Для сборки проекта выполните:
+```bash
+npm run build
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Структура проекта
+client/
+├── index.html
+├── package.json
+├── public/
+├── src/
+│ ├── App.tsx
+│ ├── main.tsx
+│ ├── assets/
+│ ├── components/
+│ ├── hooks/
+│ ├── pages/
+│ ├── router/
+│ ├── services/
+│ ├── store/
+│ └── types/
+├── tsconfig.json
+└── vite.config.ts
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Описание директорий и файлов
 
-### `npm run eject`
+#### `index.html`
+Главный HTML-шаблон приложения, в который встраивается React-дерево. Содержит корневой элемент `<div id="root">`.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### `package.json`
+Файл конфигурации проекта, содержащий список зависимостей, скрипты сборки и запуска, а также метаинформацию о проекте.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### `public/`
+Папка для статических файлов, которые копируются в корень сборки без изменений (например, favicon, изображения и др.).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### `src/`
+Основная рабочая директория, содержащая исходный код приложения.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+##### `App.tsx`
+Главный компонент приложения. Обычно содержит определение маршрутов и общие обёртки (например, провайдеры контекста).
 
-## Learn More
+##### `main.tsx`
+Точка входа в приложение. Здесь React-модуль монтируется в DOM-дерево через `ReactDOM.createRoot`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+##### `assets/`
+Ресурсы, используемые в коде: изображения, иконки, шрифты и другие статические файлы, импортируемые в компоненты.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+##### `components/`
+Переиспользуемые UI-компоненты. Каждый компонент, как правило, оформлен в виде отдельной директории с собственным `.tsx` и `.scss`/`.css` (если используются стили).
 
-### Code Splitting
+##### `hooks/`
+Кастомные хуки React, реализующие повторно используемую логику (например, работа с медиа-запросами, хранилищем, WebRTC и др.).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+##### `pages/`
+Страницы приложения, привязанные к маршрутам (роутам). Каждый файл/каталог соответствует отдельной странице интерфейса.
 
-### Analyzing the Bundle Size
+##### `router/`
+Конфигурация маршрутов для `react-router-dom`. Обычно включает файл с описанием всех доступных путей и связанными с ними компонентами.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+##### `services/`
+Модули для работы с внешними API, WebSocket, локальным хранилищем и другими вспомогательными слоями бизнес-логики.
 
-### Making a Progressive Web App
+##### `store/`
+Состояние приложения. Здесь может находиться Redux-слайсы, Zustand-хранилища, контексты React и другие механизмы управления состоянием.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+##### `types/`
+Общие типы TypeScript, используемые в разных частях приложения. Например, интерфейсы для данных пользователя, сетевых запросов и т.д.
 
-### Advanced Configuration
+#### `tsconfig.json`
+Конфигурационный файл TypeScript, определяющий правила компиляции, алиасы и другие настройки.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### `vite.config.ts`
+Конфигурация сборщика Vite. Может включать настройки путей, плагинов, прокси и прочих параметров разработки и сборки.
 
-### Deployment
+## Принципы организации
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **Функциональное разделение**: логика и структура кода разбиты по смыслу — UI, бизнес-логика, маршруты, состояния и типы.
+- **Переиспользуемость**: общие компоненты и хуки вынесены в отдельные директории.
+- **Типизация**: везде используется строгая типизация через TypeScript для повышения безопасности и предсказуемости кода.
+- **Модульность**: структура проекта позволяет масштабировать приложение, добавляя новые страницы, компоненты и сервисы без конфликтов и дублирования.
 
-### `npm run build` fails to minify
+## Зависимости
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Основные библиотеки, используемые в клиентской части:
+- `react` / `react-dom` — UI-фреймворк
+- `react-router-dom` — маршрутизация
+- `typescript` — типизация
+- `vite` — инструмент сборки
+- (Дополнительно могут быть указаны библиотеки для стилей, запросов, состояния и прочего)
+
+---
+
+Если нужно добавить описание конкретных компонентов, хуков или сервисов — пришли пример кода или названия файлов, и я дополню документацию.
