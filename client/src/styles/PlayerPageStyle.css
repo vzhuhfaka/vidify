@@ -52,7 +52,38 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 15px;
+    font-size: 20px;
+}
+
+.like_stat {
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+    padding: 5px;
+    background-color: #f7f6f6;
+}
+
+.like_stat:hover {
+    background-color: #ebdbdb;
+    cursor: pointer;
+    transform: translateY(-5px);
+}
+
+.heart {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    text-align: center;
+}
+
+.heart-filled {
+color: red;
+}
+
+.heart-empty {
+color: #f7f6f6;
+-webkit-text-stroke: 1px black; /* Контур красным */
 }
 
 .video_author {
