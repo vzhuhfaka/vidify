@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
     setUserId(newUserId)
     localStorage.setItem('authToken', newToken)
     localStorage.setItem('userId', newUserId)
+    localStorage.setItem('isAuth', true)
   }, [])
 
   // Функция выхода
